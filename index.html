@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UroScan Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body style="background:#0b0f1a;color:white;text-align:center;font-family:Arial;">
+
+<h1>UroScan</h1>
+
+<button onclick="connectBLE()">Connect BLE</button>
+
+<br><br>
+
+<button onclick="showSection('load')">Load</button>
+<button onclick="showSection('turbidity')">Turbidity</button>
+
+<p id="alert" style="color:red;font-weight:bold;"></p>
+
+<div id="load" style="display:none;">
+  <h2>Load</h2>
+  <canvas id="loadChart"></canvas>
+</div>
+
+<div id="turbidity" style="display:none;">
+  <h2>Turbidity</h2>
+  <canvas id="turbidityChart"></canvas>
+</div>
+
+</body>
+</html>
