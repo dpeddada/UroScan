@@ -2,31 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>UroScan Dashboard</title>
+  <title>UroScan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js" defer></script>
 </head>
-<body style="background:#0b0f1a;color:white;text-align:center;font-family:Arial;">
 
-<h1>UroScan</h1>
+<body>
 
-<button onclick="connectBLE()">Connect BLE</button>
+<h1 class="title">UroScan</h1>
 
-<br><br>
+<div class="main-buttons">
+  <button class="big-btn" onclick="showSection('load')">Flow Rate / Load</button>
+  <button class="big-btn" onclick="showSection('turbidity')">Turbidity</button>
+  <button class="big-btn" onclick="showSection('spectrometer')">Spectrometer</button>
+</div>
 
-<button onclick="showSection('load')">Load</button>
-<button onclick="showSection('turbidity')">Turbidity</button>
+<button onclick="connectBLE()" class="big-btn" style="margin-top:20px;">Connect Device</button>
 
-<p id="alert" style="color:red;font-weight:bold;"></p>
+<p id="alert"></p>
 
-<div id="load" style="display:none;">
-  <h2>Load</h2>
+<div id="load" class="section">
+  <h2>Load Sensor</h2>
   <canvas id="loadChart"></canvas>
 </div>
 
-<div id="turbidity" style="display:none;">
+<div id="turbidity" class="section">
   <h2>Turbidity</h2>
   <canvas id="turbidityChart"></canvas>
+</div>
+
+<div id="spectrometer" class="section">
+  <h2>Spectrometer</h2>
+  <p>Coming soon...</p>
 </div>
 
 </body>

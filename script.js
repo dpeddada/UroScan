@@ -14,23 +14,29 @@ window.onload = () => {
 };
 
 function showSection(id) {
-  document.getElementById('load').style.display = 'none';
-  document.getElementById('turbidity').style.display = 'none';
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
 }
 
 async function connectBLE() {
-  device = await navigator.bluetooth.requestDevice({
-    acceptAllDevices: true,
-    optionalServices: ['battery_service']
-  });
+  try {
+    device = await navigator.bluetooth.requestDevice({
+      acceptAllDevices: true,
+      optionalServices: ['battery_service']
+    });
 
-  const server = await device.gatt.connect();
-  const service = await server.getPrimaryService('battery_service');
-  characteristic = await service.getCharacteristic('battery_level');
+    const server = await device.gatt.connect();
+    const service = await server.getPrimaryService('battery_service');
+    characteristic = await service.getCharacteristic('battery_level');
 
-  await characteristic.startNotifications();
-  characteristic.addEventListener('characteristicvaluechanged', handleData);
+    await characteristic.startNotifications();
+    characteristic.addEventListener('characteristicvaluechanged', handleData);
+
+    alert("Connected to device!");
+  } catch (error) {
+    console.error(error);
+    alert("Connection failed");
+  }
 }
 
 function handleData(event) {
