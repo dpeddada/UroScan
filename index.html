@@ -3,41 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>UroScan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js" defer></script>
 </head>
-
 <body>
-
-<h1 class="title">UroScan</h1>
-
-<div class="main-buttons">
-  <button class="big-btn" onclick="showSection('load')">Flow Rate / Load</button>
-  <button class="big-btn" onclick="showSection('turbidity')">Turbidity</button>
-  <button class="big-btn" onclick="showSection('spectrometer')">Spectrometer</button>
-</div>
-
-<button onclick="connectBLE()" class="big-btn" style="margin-top:20px;">Connect Device</button>
-
-<p id="alert"></p>
-
-<div id="load" class="section">
-  <h2>Load Sensor</h2>
-  <canvas id="loadChart"></canvas>
-</div>
-
-<div id="turbidity" class="section">
-  <h2>Turbidity</h2>
-  <canvas id="turbidityChart"></canvas>
-</div>
-
-<div id="spectrometer" class="section">
-  <h2>Spectrometer</h2>
-  <p>Coming soon...</p>
-</div>
-
+<h1>UroScan Dashboard</h1>
+<button onclick="connectBLE()">Connect BLE</button>
 </body>
 </html>
