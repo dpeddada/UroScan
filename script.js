@@ -29,15 +29,33 @@ const screens = document.querySelectorAll(".screen");
 const alertsList = document.getElementById("alertsList");
 
 function showScreen(screenId) {
-  screens.forEach(screen => screen.classList.remove("active"));
+  screens.forEach((screen) => screen.classList.remove("active"));
   document.getElementById(screenId).classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-document.getElementById("flowBtn").addEventListener("click", () => showScreen("loadScreen"));
-document.getElementById("specBtn").addEventListener("click", () => showScreen("spectrometerScreen"));
-document.getElementById("turbBtn").addEventListener("click", () => showScreen("turbidityScreen"));
+const flowBtn = document.getElementById("flowBtn");
+const volumeBtn = document.getElementById("volumeBtn");
+const specBtn = document.getElementById("specBtn");
+const turbBtn = document.getElementById("turbBtn");
 
-document.querySelectorAll(".back-btn").forEach(btn => {
+if (flowBtn) {
+  flowBtn.addEventListener("click", () => showScreen("loadScreen"));
+}
+
+if (volumeBtn) {
+  volumeBtn.addEventListener("click", () => showScreen("loadScreen"));
+}
+
+if (specBtn) {
+  specBtn.addEventListener("click", () => showScreen("spectrometerScreen"));
+}
+
+if (turbBtn) {
+  turbBtn.addEventListener("click", () => showScreen("turbidityScreen"));
+}
+
+document.querySelectorAll(".back-btn").forEach((btn) => {
   btn.addEventListener("click", () => showScreen(btn.dataset.back));
 });
 
@@ -68,13 +86,13 @@ function addAlert(message) {
 }
 
 function removeAlert(message) {
-  activeAlerts = activeAlerts.filter(alert => alert !== message);
+  activeAlerts = activeAlerts.filter((alert) => alert !== message);
   renderAlerts();
 }
 
 function renderAlerts() {
   alertsList.innerHTML = activeAlerts.length
-    ? activeAlerts.map(alert => `• ${alert}`).join("<br>")
+    ? activeAlerts.map((alert) => `• ${alert}`).join("<br>")
     : "No active alerts.";
 }
 
@@ -88,7 +106,7 @@ function addChartPoint(chart, values) {
 
   if (chart.data.labels.length > MAX_POINTS) {
     chart.data.labels.shift();
-    chart.data.datasets.forEach(dataset => dataset.data.shift());
+    chart.data.datasets.forEach((dataset) => dataset.data.shift());
   }
 
   chart.update();
@@ -343,13 +361,6 @@ document.getElementById("faqBtn").addEventListener("click", () => {
   document.getElementById("faqBox").classList.toggle("show");
   document.getElementById("helpBox").classList.remove("show");
   document.getElementById("alertsBox").classList.remove("show");
-  document.getElementById("patientBox").classList.remove("show");
-});
-
-document.getElementById("alertsBtn").addEventListener("click", () => {
-  document.getElementById("alertsBox").classList.toggle("show");
-  document.getElementById("helpBox").classList.remove("show");
-  document.getElementById("faqBox").classList.remove("show");
   document.getElementById("patientBox").classList.remove("show");
 });
 
