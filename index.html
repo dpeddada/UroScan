@@ -16,61 +16,75 @@
     <button class="demo-btn" id="demoBtn">Use Demo Data</button>
   </div>
 
-  <!-- Optional logo file. If you don't upload logo.png, it will hide itself. -->
-  <img src="logo.png" class="logo-bg" alt="UroScan Logo" onerror="this.style.display='none'" />
-
   <!-- HOME -->
   <section id="homeScreen" class="screen active">
-    <div class="home-wrap">
-      <h1 class="page-title">UroScan</h1>
+    <div class="home-screen-layout">
+      <div class="home-canvas">
+        <div class="title-panel">
+          <h1 class="page-title">UroScan</h1>
+        </div>
 
-      <div class="row-3">
-        <button class="wire-btn" id="flowBtn">Flow Rate / Load Sensor</button>
-        <button class="wire-btn" id="specBtn">Spectrometer</button>
-        <button class="wire-btn" id="turbBtn">Turbidity</button>
-      </div>
+        <!-- Optional logo image -->
+        <img
+          src="logo.png"
+          class="home-watermark"
+          alt="UroScan Logo"
+          onerror="this.style.display='none'"
+        />
 
-      <div class="row-4">
-        <div class="row-4-left">
-          <button class="wire-btn small" id="patientBtn">Patient Info</button>
-          <button class="wire-btn small" id="alertsHomeBtn">Alerts</button>
+        <div class="home-button-row">
+          <button class="home-btn large" id="flowBtn">
+            <span class="flow-text">Flow<br />Rate</span>
+          </button>
+
+          <button class="home-btn small" id="volumeBtn">
+            <span class="left-stack-text">
+              <span>Volume</span>
+              <span>/ GRAPH</span>
+              <span>FOR VOLUME</span>
+            </span>
+          </button>
+
+          <button class="home-btn large" id="specBtn">Color</button>
+          <button class="home-btn large" id="turbBtn">Turbidity</button>
+        </div>
+
+        <div class="home-lower-row">
+          <button class="secondary-btn" id="patientBtn">Patient Info</button>
+          <button class="secondary-btn" id="alertsHomeBtn">Alerts</button>
+          <button class="secondary-btn" id="helpBtn">Help</button>
+          <button class="secondary-btn" id="faqBtn">FAQ</button>
+        </div>
+
+        <div class="home-info-panel">
+          <div class="info-box toggle-box" id="helpBox">
+            <strong>Help</strong><br /><br />
+            1. Turn on the ESP32.<br />
+            2. Click <strong>Connect BLE</strong>.<br />
+            3. Choose <strong>UroScale</strong>.<br />
+            4. Open Flow Rate, Color, or Turbidity.
+          </div>
+
+          <div class="info-box toggle-box" id="faqBox">
+            <strong>FAQ</strong><br /><br />
+            <strong>Why is BLE not working?</strong><br />
+            Use Chrome or Edge and make sure Bluetooth is enabled.<br /><br />
+            <strong>Why is the spectrometer graph blank?</strong><br />
+            The ESP32 needs to send a numeric <code>SPEC=</code> value.
+          </div>
+
+          <div class="info-box toggle-box" id="alertsBox">
+            <strong>Alerts</strong><br /><br />
+            <div id="alertsList">No active alerts.</div>
+          </div>
+
+          <div class="info-box toggle-box" id="patientBox">
+            <strong>Patient Info</strong><br /><br />
+            Patient information panel placeholder.<br />
+            Edit this later with patient name, room, bag status, or notes.
+          </div>
         </div>
       </div>
-
-      <div class="page-wrap home-box-wrap">
-        <div class="info-box toggle-box" id="helpBox">
-          <strong>Help</strong><br><br>
-          1. Turn on the ESP32.<br>
-          2. Click Connect BLE.<br>
-          3. Choose <strong>UroScale</strong>.<br>
-          4. Open Load, Spectrometer, or Turbidity.
-        </div>
-
-        <div class="info-box toggle-box" id="faqBox">
-          <strong>FAQ</strong><br><br>
-          <strong>Why is BLE not working?</strong><br>
-          Use Chrome or Edge and make sure Bluetooth is enabled.<br><br>
-          <strong>Why is the spectrometer graph blank?</strong><br>
-          The ESP32 needs to send a numeric <code>SPEC=</code> value.
-        </div>
-
-        <div class="info-box toggle-box" id="alertsBox">
-          <strong>Alerts</strong><br><br>
-          <div id="alertsList">No active alerts.</div>
-        </div>
-
-        <div class="info-box toggle-box" id="patientBox">
-          <strong>Patient Info</strong><br><br>
-          Patient information panel placeholder.<br>
-          Edit this later with patient name, room, bag status, or notes.
-        </div>
-      </div>
-    </div>
-
-    <div class="bottom-right-buttons">
-      <button class="wire-btn small" id="helpBtn">Help</button>
-      <button class="wire-btn small" id="faqBtn">FAQ</button>
-      <button class="wire-btn small" id="alertsBtn">Alerts</button>
     </div>
   </section>
 
@@ -182,7 +196,7 @@
         <button class="back-btn" data-back="homeScreen">← Back</button>
       </div>
 
-      <h1 class="page-title">Spectrometer</h1>
+      <h1 class="page-title">Color</h1>
 
       <div class="data-panel">
         <div class="data-grid">
@@ -203,7 +217,7 @@
         </div>
 
         <div class="chart-panel">
-          <div class="chart-title">Spectrometer Trend</div>
+          <div class="chart-title">Color Trend</div>
           <div class="chart-wrap">
             <canvas id="spectrometerChart"></canvas>
           </div>
