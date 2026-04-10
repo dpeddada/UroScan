@@ -7,7 +7,7 @@ function showScreen(id) {
 }
 
 document.getElementById("flowBtn").addEventListener("click", () => showScreen("loadScreen"));
-document.getElementById("volumeBtn").addEventListener("click", () => showScreen("volumeScreen"));
+document.getElementById("VolumeBtn").addEventListener("click", () => showScreen("volumeScreen"));
 document.getElementById("turbBtn").addEventListener("click", () => showScreen("turbidityScreen"));
 document.getElementById("specBtn").addEventListener("click", () => showScreen("spectrometerScreen"));
 
