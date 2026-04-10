@@ -9,64 +9,220 @@
   <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="top-right-status">
+    <div id="deviceStatus">Device: Not Connected</div>
+    <div id="bleStatus">Bluetooth: Disconnected</div>
+    <button class="connect-btn" id="connectBtn">Connect BLE</button>
+    <button class="demo-btn" id="demoBtn">Use Demo Data</button>
+  </div>
 
-<div class="top-right-status">
-  <div id="deviceStatus">Device: Not Connected</div>
-  <div id="bleStatus">Bluetooth: Disconnected</div>
-  <button class="connect-btn" id="connectBtn">Connect BLE</button>
-  <button class="demo-btn" id="demoBtn">Use Demo Data</button>
-</div>
+  <section id="homeScreen" class="screen active">
+    <div class="home-screen-layout">
+      <div class="home-canvas">
+        <div class="title-panel">
+          <h1 class="home-title">UroScan</h1>
+        </div>
 
-<section id="homeScreen" class="screen active">
-  <div class="home-screen-layout">
-    <div class="home-canvas">
-
-      <div class="title-panel">
-        <h1 class="page-title">UroScan</h1>
+        <div class="home-button-row">
+          <button class="home-btn large" id="flowBtn">Flow<br>Rate</button>
+          <button class="home-btn small" id="volumeBtn">Graph</button>
+          <button class="home-btn large" id="specBtn">Color</button>
+          <button class="home-btn large" id="turbBtn">Turbidity</button>
+        </div>
       </div>
-
-      <div class="home-button-row">
-        <button class="home-btn large" id="flowBtn">Flow<br>Rate</button>
-        <button class="home-btn small" id="volumeBtn">Volume / Graph</button>
-        <button class="home-btn large" id="specBtn">Color</button>
-        <button class="home-btn large" id="turbBtn">Turbidity</button>
-      </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="loadScreen" class="screen">
-  <div class="page-wrap">
-    <button class="back-btn" data-back="homeScreen">← Back</button>
-    <h1 class="page-title">Flow Rate</h1>
-    <canvas id="loadChart"></canvas>
-  </div>
-</section>
+  <section id="loadScreen" class="screen">
+    <div class="sensor-page">
+      <button class="back-btn" data-back="homeScreen">← Back</button>
+      <h1 class="sensor-title">FLOW-RATE</h1>
 
-<section id="volumeScreen" class="screen">
-  <div class="page-wrap">
-    <button class="back-btn" data-back="homeScreen">← Back</button>
-    <h1 class="page-title">Volume</h1>
-    <canvas id="volumeChart"></canvas>
-  </div>
-</section>
+      <div class="sensor-grid">
+        <div class="left-column">
+          <div class="panel top-panel">
+            <div class="mini-input full-width">
+              <label>Input Initial Weight of Bag</label>
+              <input id="initialWeightInput" type="text" placeholder="Enter starting bag weight" />
+            </div>
 
-<section id="turbidityScreen" class="screen">
-  <div class="page-wrap">
-    <button class="back-btn" data-back="homeScreen">← Back</button>
-    <h1 class="page-title">Turbidity</h1>
-    <canvas id="turbidityChart"></canvas>
-  </div>
-</section>
+            <div class="split-row">
+              <div class="mini-input">
+                <label>Patient ID</label>
+                <input id="patientIdInput" type="text" placeholder="ID" />
+              </div>
 
-<section id="spectrometerScreen" class="screen">
-  <div class="page-wrap">
-    <button class="back-btn" data-back="homeScreen">← Back</button>
-    <h1 class="page-title">Color</h1>
-    <canvas id="spectrometerChart"></canvas>
-  </div>
-</section>
+              <div class="photo-box">
+                <div class="photo-label">Pic of Patient for ID</div>
+              </div>
+            </div>
+          </div>
 
+          <div class="panel bottom-panel">
+            <div class="help-box">Help</div>
+            <div class="alert-box" id="flowAlertBox">Alert - Normal</div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <div class="panel graph-panel">
+            <div class="panel-center-label">Graph</div>
+            <div class="chart-wrap">
+              <canvas id="loadChart"></canvas>
+            </div>
+          </div>
+
+          <div class="panel metric-panel">
+            <div class="metric-label">Number of Flow Rate (Calculated from volume and density)</div>
+            <div class="metric-value" id="flowMetricValue">-- mL/sec</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="volumeScreen" class="screen">
+    <div class="sensor-page">
+      <button class="back-btn" data-back="homeScreen">← Back</button>
+      <h1 class="sensor-title">GRAPH</h1>
+
+      <div class="sensor-grid">
+        <div class="left-column">
+          <div class="panel top-panel">
+            <div class="mini-input full-width">
+              <label>Input Initial Volume of Bag</label>
+              <input id="initialVolumeInput" type="text" placeholder="Enter starting volume" />
+            </div>
+
+            <div class="split-row">
+              <div class="mini-input">
+                <label>Patient ID</label>
+                <input id="volumePatientIdInput" type="text" placeholder="ID" />
+              </div>
+
+              <div class="photo-box">
+                <div class="photo-label">Pic of Patient for ID</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel bottom-panel">
+            <div class="help-box">Help</div>
+            <div class="alert-box" id="volumeAlertBox">Alert - Normal</div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <div class="panel graph-panel">
+            <div class="panel-center-label">Graph</div>
+            <div class="chart-wrap">
+              <canvas id="volumeChart"></canvas>
+            </div>
+          </div>
+
+          <div class="panel metric-panel">
+            <div class="metric-label">Current Volume</div>
+            <div class="metric-value" id="volumeMetricValue">-- mL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="turbidityScreen" class="screen">
+    <div class="sensor-page">
+      <button class="back-btn" data-back="homeScreen">← Back</button>
+      <h1 class="sensor-title">TURBIDITY</h1>
+
+      <div class="sensor-grid">
+        <div class="left-column">
+          <div class="panel top-panel">
+            <div class="mini-input full-width">
+              <label>Sample Status</label>
+              <input id="sampleStatusInput" type="text" placeholder="Clear / cloudy / etc." />
+            </div>
+
+            <div class="split-row">
+              <div class="mini-input">
+                <label>Patient ID</label>
+                <input id="turbPatientIdInput" type="text" placeholder="ID" />
+              </div>
+
+              <div class="photo-box">
+                <div class="photo-label">Pic of Patient for ID</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel bottom-panel">
+            <div class="help-box">Help</div>
+            <div class="alert-box" id="turbAlertBox">Alert - Normal</div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <div class="panel graph-panel">
+            <div class="panel-center-label">Graph</div>
+            <div class="chart-wrap">
+              <canvas id="turbidityChart"></canvas>
+            </div>
+          </div>
+
+          <div class="panel metric-panel">
+            <div class="metric-label">Turbidity Reading</div>
+            <div class="metric-value" id="turbMetricValue">-- rNTU</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="spectrometerScreen" class="screen">
+    <div class="sensor-page">
+      <button class="back-btn" data-back="homeScreen">← Back</button>
+      <h1 class="sensor-title">COLOR</h1>
+
+      <div class="sensor-grid">
+        <div class="left-column">
+          <div class="panel top-panel">
+            <div class="mini-input full-width">
+              <label>Color Baseline</label>
+              <input id="baselineInput" type="text" placeholder="Enter baseline color note" />
+            </div>
+
+            <div class="split-row">
+              <div class="mini-input">
+                <label>Patient ID</label>
+                <input id="colorPatientIdInput" type="text" placeholder="ID" />
+              </div>
+
+              <div class="photo-box">
+                <div class="photo-label">Pic of Patient for ID</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel bottom-panel">
+            <div class="help-box">Help</div>
+            <div class="alert-box" id="colorAlertBox">Alert - Normal</div>
+          </div>
+        </div>
+
+        <div class="right-column">
+          <div class="panel graph-panel">
+            <div class="panel-center-label">Graph</div>
+            <div class="chart-wrap">
+              <canvas id="spectrometerChart"></canvas>
+            </div>
+          </div>
+
+          <div class="panel metric-panel">
+            <div class="metric-label">Color Reading</div>
+            <div class="metric-value" id="colorMetricValue">--</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
