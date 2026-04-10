@@ -2,17 +2,30 @@ const screens = document.querySelectorAll('.screen');
 
 function showScreen(id) {
   screens.forEach(screen => screen.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  const target = document.getElementById(id);
+  if (target) target.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-document.getElementById("flowBtn").addEventListener("click", () => showScreen("loadScreen"));
-document.getElementById("VolumeBtn").addEventListener("click", () => showScreen("volumeScreen"));
-document.getElementById("turbBtn").addEventListener("click", () => showScreen("turbidityScreen"));
-document.getElementById("specBtn").addEventListener("click", () => showScreen("spectrometerScreen"));
+function bindNav(buttonId, targetScreen) {
+  const btn = document.getElementById(buttonId);
+  if (!btn) return;
+  btn.addEventListener('click', (event) => {
+    event.preventDefault();
+    showScreen(targetScreen);
+  });
+}
 
-document.querySelectorAll(".back-btn").forEach(btn => {
-  btn.addEventListener("click", () => showScreen(btn.dataset.back));
+bindNav('flowBtn', 'loadScreen');
+bindNav('volumeBtn', 'volumeScreen');
+bindNav('turbBtn', 'turbidityScreen');
+bindNav('specBtn', 'spectrometerScreen');
+
+document.querySelectorAll('.back-btn').forEach(btn => {
+  btn.addEventListener('click', (event) => {
+    event.preventDefault();
+    showScreen(btn.dataset.back || 'homeScreen');
+  });
 });
 
 const chartOptions = {
@@ -36,7 +49,7 @@ const chartOptions = {
   }
 };
 
-const loadChart = new Chart(document.getElementById("loadChart"), {
+const loadChart = new Chart(document.getElementById('loadChart'), {
   type: 'line',
   data: {
     labels: ['1', '2', '3', '4', '5', '6'],
@@ -50,7 +63,7 @@ const loadChart = new Chart(document.getElementById("loadChart"), {
   options: chartOptions
 });
 
-const volumeChart = new Chart(document.getElementById("volumeChart"), {
+const volumeChart = new Chart(document.getElementById('volumeChart'), {
   type: 'line',
   data: {
     labels: ['1', '2', '3', '4', '5', '6'],
@@ -64,7 +77,7 @@ const volumeChart = new Chart(document.getElementById("volumeChart"), {
   options: chartOptions
 });
 
-const turbidityChart = new Chart(document.getElementById("turbidityChart"), {
+const turbidityChart = new Chart(document.getElementById('turbidityChart'), {
   type: 'line',
   data: {
     labels: ['1', '2', '3', '4', '5', '6'],
@@ -78,7 +91,7 @@ const turbidityChart = new Chart(document.getElementById("turbidityChart"), {
   options: chartOptions
 });
 
-const spectrometerChart = new Chart(document.getElementById("spectrometerChart"), {
+const spectrometerChart = new Chart(document.getElementById('spectrometerChart'), {
   type: 'line',
   data: {
     labels: ['1', '2', '3', '4', '5', '6'],
@@ -93,11 +106,13 @@ const spectrometerChart = new Chart(document.getElementById("spectrometerChart")
 });
 
 function setMetric(id, text) {
-  document.getElementById(id).textContent = text;
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
 }
 
 function setAlert(id, text, isAlert) {
   const box = document.getElementById(id);
+  if (!box) return;
   box.textContent = text;
   box.classList.toggle('alert', Boolean(isAlert));
 }
@@ -112,12 +127,12 @@ setAlert('volumeAlertBox', 'Alert - Normal', false);
 setAlert('turbAlertBox', 'Alert - Slightly High', true);
 setAlert('colorAlertBox', 'Alert - Normal', false);
 
-document.getElementById("connectBtn").addEventListener("click", () => {
-  document.getElementById("deviceStatus").textContent = "Device: UroScan BLE";
-  document.getElementById("bleStatus").textContent = "Bluetooth: Connected";
+document.getElementById('connectBtn').addEventListener('click', () => {
+  document.getElementById('deviceStatus').textContent = 'Device: UroScan BLE';
+  document.getElementById('bleStatus').textContent = 'Bluetooth: Connected';
 });
 
-document.getElementById("demoBtn").addEventListener("click", () => {
+document.getElementById('demoBtn').addEventListener('click', () => {
   loadChart.data.datasets[0].data = [10, 13, 12, 16, 18, 19];
   volumeChart.data.datasets[0].data = [110, 145, 185, 230, 275, 320];
   turbidityChart.data.datasets[0].data = [18, 23, 31, 40, 47, 55];
@@ -138,6 +153,6 @@ document.getElementById("demoBtn").addEventListener("click", () => {
   setAlert('turbAlertBox', 'Alert - High', true);
   setAlert('colorAlertBox', 'Alert - Normal', false);
 
-  document.getElementById("deviceStatus").textContent = "Device: Demo Mode";
-  document.getElementById("bleStatus").textContent = "Bluetooth: Simulated";
+  document.getElementById('deviceStatus').textContent = 'Device: Demo Mode';
+  document.getElementById('bleStatus').textContent = 'Bluetooth: Simulated';
 });

@@ -106,9 +106,14 @@ body {
   grid-template-columns: 140px 140px 1fr 1fr;
   gap: 16px;
   margin-top: 18px;
+  position: relative;
+  z-index: 5;
 }
 
 .home-btn {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
   border: 3px solid #000;
   background: #2f80ad;
   color: #fff;
