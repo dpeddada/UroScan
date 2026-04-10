@@ -2,230 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UroScan</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="top-right-status">
-    <div id="deviceStatus">Device: Not Connected</div>
-    <div id="bleStatus">Bluetooth: Disconnected</div>
-    <button class="connect-btn" id="connectBtn">Connect BLE</button>
-    <button class="demo-btn" id="demoBtn">Use Demo Data</button>
+
+<div class="top-right-status">
+  <div id="deviceStatus">Device: Not Connected</div>
+  <div id="bleStatus">Bluetooth: Disconnected</div>
+  <button class="connect-btn" id="connectBtn">Connect BLE</button>
+  <button class="demo-btn" id="demoBtn">Use Demo Data</button>
+</div>
+
+<section id="homeScreen" class="screen active">
+  <div class="home-screen-layout">
+    <div class="home-canvas">
+
+      <div class="title-panel">
+        <h1 class="page-title">UroScan</h1>
+      </div>
+
+      <div class="home-button-row">
+        <button class="home-btn large" id="flowBtn">Flow<br>Rate</button>
+        <button class="home-btn small" id="volumeBtn">Volume / Graph</button>
+        <button class="home-btn large" id="specBtn">Color</button>
+        <button class="home-btn large" id="turbBtn">Turbidity</button>
+      </div>
+
+    </div>
   </div>
+</section>
 
-  <!-- HOME -->
-  <section id="homeScreen" class="screen active">
-    <div class="home-screen-layout">
-      <div class="home-canvas">
-        <div class="title-panel">
-          <h1 class="page-title">UroScan</h1>
-        </div>
+<section id="loadScreen" class="screen">
+  <div class="page-wrap">
+    <button class="back-btn" data-back="homeScreen">← Back</button>
+    <h1 class="page-title">Flow Rate</h1>
+    <canvas id="loadChart"></canvas>
+  </div>
+</section>
 
-        <!-- Optional logo image -->
-        <img
-          src="logo.png"
-          class="home-watermark"
-          alt="UroScan Logo"
-          onerror="this.style.display='none'"
-        />
+<section id="volumeScreen" class="screen">
+  <div class="page-wrap">
+    <button class="back-btn" data-back="homeScreen">← Back</button>
+    <h1 class="page-title">Volume</h1>
+    <canvas id="volumeChart"></canvas>
+  </div>
+</section>
 
-        <div class="home-button-row">
-          <button class="home-btn large" id="flowBtn">
-            <span class="flow-text">Flow<br />Rate</span>
-          </button>
+<section id="turbidityScreen" class="screen">
+  <div class="page-wrap">
+    <button class="back-btn" data-back="homeScreen">← Back</button>
+    <h1 class="page-title">Turbidity</h1>
+    <canvas id="turbidityChart"></canvas>
+  </div>
+</section>
 
-          <button class="home-btn small" id="volumeBtn">
-            <span class="left-stack-text">
-              <span>Volume</span>
-              <span>/ GRAPH</span>
-              <span>FOR VOLUME</span>
-            </span>
-          </button>
+<section id="spectrometerScreen" class="screen">
+  <div class="page-wrap">
+    <button class="back-btn" data-back="homeScreen">← Back</button>
+    <h1 class="page-title">Color</h1>
+    <canvas id="spectrometerChart"></canvas>
+  </div>
+</section>
 
-          <button class="home-btn large" id="specBtn">Color</button>
-          <button class="home-btn large" id="turbBtn">Turbidity</button>
-        </div>
-
-        <div class="home-lower-row">
-          <button class="secondary-btn" id="patientBtn">Patient Info</button>
-          <button class="secondary-btn" id="alertsHomeBtn">Alerts</button>
-          <button class="secondary-btn" id="helpBtn">Help</button>
-          <button class="secondary-btn" id="faqBtn">FAQ</button>
-        </div>
-
-        <div class="home-info-panel">
-          <div class="info-box toggle-box" id="helpBox">
-            <strong>Help</strong><br /><br />
-            1. Turn on the ESP32.<br />
-            2. Click <strong>Connect BLE</strong>.<br />
-            3. Choose <strong>UroScale</strong>.<br />
-            4. Open Flow Rate, Color, or Turbidity.
-          </div>
-
-          <div class="info-box toggle-box" id="faqBox">
-            <strong>FAQ</strong><br /><br />
-            <strong>Why is BLE not working?</strong><br />
-            Use Chrome or Edge and make sure Bluetooth is enabled.<br /><br />
-            <strong>Why is the spectrometer graph blank?</strong><br />
-            The ESP32 needs to send a numeric <code>SPEC=</code> value.
-          </div>
-
-          <div class="info-box toggle-box" id="alertsBox">
-            <strong>Alerts</strong><br /><br />
-            <div id="alertsList">No active alerts.</div>
-          </div>
-
-          <div class="info-box toggle-box" id="patientBox">
-            <strong>Patient Info</strong><br /><br />
-            Patient information panel placeholder.<br />
-            Edit this later with patient name, room, bag status, or notes.
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- LOAD -->
-  <section id="loadScreen" class="screen">
-    <div class="page-wrap">
-      <div class="top-bar">
-        <button class="back-btn" data-back="homeScreen">← Back</button>
-      </div>
-
-      <h1 class="page-title">Flow Rate / Load Sensor</h1>
-
-      <div class="data-panel">
-        <div class="data-grid">
-          <div class="data-card">
-            <div class="label">Weight</div>
-            <div class="value" id="weightValue">-- g</div>
-          </div>
-
-          <div class="data-card">
-            <div class="label">Volume</div>
-            <div class="value" id="volumeValue">-- mL</div>
-          </div>
-
-          <div class="data-card">
-            <div class="label">Motion</div>
-            <div class="value" id="motionValue">--</div>
-          </div>
-
-          <div class="data-card">
-            <div class="label">Beam ADC</div>
-            <div class="value" id="beamValue">--</div>
-            <div class="subvalue">Displayed only, not graphed</div>
-          </div>
-        </div>
-
-        <div class="actions-row">
-          <button class="action-btn" id="tareBtn">Tare</button>
-          <button class="action-btn" id="rawBtn">Read Raw</button>
-          <button class="action-btn" id="beamBtn">Check Beam</button>
-        </div>
-
-        <div class="chart-panel">
-          <div class="chart-title">Weight and Volume Trend</div>
-          <div class="chart-wrap">
-            <canvas id="loadChart"></canvas>
-          </div>
-        </div>
-
-        <div class="log-box" id="loadLog">Load sensor log...</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TURBIDITY -->
-  <section id="turbidityScreen" class="screen">
-    <div class="page-wrap">
-      <div class="top-bar">
-        <button class="back-btn" data-back="homeScreen">← Back</button>
-      </div>
-
-      <h1 class="page-title">Turbidity</h1>
-
-      <div class="data-panel">
-        <div class="data-grid">
-          <div class="data-card">
-            <div class="label">Turbidity</div>
-            <div class="value" id="turbidityValue">-- rNTU</div>
-          </div>
-
-          <div class="data-card">
-            <div class="label">Raw Turbidity Byte</div>
-            <div class="value" id="byteValue">--</div>
-          </div>
-
-          <div class="data-card">
-            <div class="label">BDL</div>
-            <div class="value" id="bdlValue">--</div>
-          </div>
-
-          <div class="data-card">
-            <div class="label">SAT</div>
-            <div class="value" id="satValue">--</div>
-          </div>
-        </div>
-
-        <div class="actions-row">
-          <button class="action-btn" id="readTurbBtn">Read Turbidity</button>
-          <button class="action-btn" id="labelABtn">Set Label A</button>
-          <button class="action-btn" id="labelBBtn">Set Label B</button>
-        </div>
-
-        <div class="chart-panel">
-          <div class="chart-title">Turbidity Trend</div>
-          <div class="chart-wrap">
-            <canvas id="turbidityChart"></canvas>
-          </div>
-        </div>
-
-        <div class="log-box" id="turbLog">Turbidity log...</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SPECTROMETER -->
-  <section id="spectrometerScreen" class="screen">
-    <div class="page-wrap">
-      <div class="top-bar">
-        <button class="back-btn" data-back="homeScreen">← Back</button>
-      </div>
-
-      <h1 class="page-title">Color</h1>
-
-      <div class="data-panel">
-        <div class="data-grid">
-          <div class="data-card">
-            <div class="label">Current Reading</div>
-            <div class="value" id="specValue">--</div>
-            <div class="subvalue" id="specSubvalue">Waiting for numeric SPEC data</div>
-          </div>
-
-          <div class="data-card">
-            <div class="label">Status</div>
-            <div class="value" id="specStatus">Waiting</div>
-          </div>
-        </div>
-
-        <div class="actions-row">
-          <button class="action-btn" id="requestSpecBtn">Request Reading</button>
-        </div>
-
-        <div class="chart-panel">
-          <div class="chart-title">Color Trend</div>
-          <div class="chart-wrap">
-            <canvas id="spectrometerChart"></canvas>
-          </div>
-        </div>
-
-        <div class="log-box" id="specLog">Spectrometer log...</div>
-      </div>
-    </div>
-  </section>
 </body>
 </html>
